@@ -15,6 +15,6 @@ typedef struct s_plist{
 
 ListeCell alloue_cellule(Particule *p) ;
 
-ListeCell insere_queue(ListeCell * lst,Particule *p) ;
+ListeCell insere_plist(ListeCell * lst,Particule *p) ;
 
 #endif

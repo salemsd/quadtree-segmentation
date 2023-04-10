@@ -20,8 +20,8 @@ void dessineZones(QuadTree Q){
         return;
     }
 
-    MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_ALICEBLUE);
-    MLV_draw_filled_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_ALICEBLUE, 50));
+    MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_BLUE4);
+    MLV_draw_filled_rectangle(Q->x1 - 1, Q->y1 - 1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_BLUE, 64));
     MLV_actualise_window();
 
     dessineZones(Q->n1);

@@ -16,11 +16,12 @@ ListeCell alloue_cellule(Particule *p){
 
 }
 
-ListeCell insere_queue(ListeCell * lst,Particule *p){
+ListeCell insere_plist(ListeCell * lst, Particule *p){
     ListeCell new_cell = alloue_cellule(p);
 
     if(new_cell){
         new_cell->next = *lst;
+        new_cell->part = p;
     }
 
     return new_cell;

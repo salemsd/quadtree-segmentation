@@ -16,11 +16,10 @@ typedef struct s_quadtree{
     
 } QuadNode, *QuadTree;
 
-
 QuadTree init_quadtree(int x1, int y1, int x2, int y2, int nbp);
 
-QuadTree find_node(QuadTree Q, Particule part);
+void insert_quadtree(QuadTree *Q, Particule p, Zone *zone, ListeCell prev);
 
-void insert(QuadTree *qt, Particule p, Zone zone);
+void gestion_insert_qt(QuadTree *Q, Particule p, Zone *zone, ListeCell prev);
 
 #endif

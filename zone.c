@@ -10,12 +10,18 @@ Zone init_zone(int W_H, int wmin, int Np, int Kp){
     zone.W_H = W_H;
     zone.wmin = wmin;
     zone.tab_part = (Particule *) malloc(NMAX * sizeof(Particule));
+    zone.curlen = 0;
 
     return zone;
 }
 
+void free_tab_part(Zone *zone){
+    free(zone->tab_part);
+    zone->tab_part = NULL;
+}
+
 void init_tab_particule_rand(Zone *zone){
-    for(int i = 0 ; i < zone->Np ; i++){
+    for(int i = 0 ; i < zone->Np; i++){
         zone->tab_part[i] = getParticule(zone->W_H);
     }
 }
