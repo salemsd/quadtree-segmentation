@@ -69,23 +69,23 @@ void insert(QuadTree *qt, Particule p, Zone zone) {
     else {
         double dist ;
         int min_child = 1 ;
-        double min_dist = MAX (abs(p.x - (node->n1->x1 + node->n1->x2) / 2.0), abs(p.y - (node->n1->y1 + node->n1->y2) / 2.0));
+        double min_dist = MAX(abs(p.x - (node->n1->x1 + node->n1->x2) / 2.0), abs(p.y - (node->n1->y1 + node->n1->y2) / 2.0));
 
-        dist = MAX (abs(p.x - (node->n2->x1 + node->n2->x2) / 2.0), abs(p.y - (node->n2->y1 + node->n2->y2) / 2.0));
+        dist = MAX(abs(p.x - (node->n2->x1 + node->n2->x2) / 2.0), abs(p.y - (node->n2->y1 + node->n2->y2) / 2.0));
 
         if(dist < min_dist){
             min_dist = dist ;
             min_child = 2 ;
         }
 
-        dist = MAX (abs(p.x - (node->n3->x1 + node->n3->x2) / 2.0), abs(p.y - (node->n3->y1 + node->n3->y2) / 2.0));
+        dist = MAX(abs(p.x - (node->n3->x1 + node->n3->x2) / 2.0), abs(p.y - (node->n3->y1 + node->n3->y2) / 2.0));
 
         if(dist < min_dist){
             min_dist = dist ;
             min_child = 3 ;
         }
 
-        dist = MAX (abs(p.x - (node->n4->x1 + node->n4->x2) / 2.0), abs(p.y - (node->n4->y1 + node->n4->y2) / 2.0));
+        dist = MAX(abs(p.x - (node->n4->x1 + node->n4->x2) / 2.0), abs(p.y - (node->n4->y1 + node->n4->y2) / 2.0));
         if(dist < min_dist){
             min_dist = dist ;
             min_child = 4 ;

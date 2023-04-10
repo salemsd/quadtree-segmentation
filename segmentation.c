@@ -3,19 +3,20 @@
 #include "zone.h"
 
 void test(){
-    MLV_create_window("test", "t", 512, 512);
-    MLV_clear_window(MLV_COLOR_WHITE);
+    Zone zone = init_zone(512, 8, 0, 10);
 
-    Zone zone;
-    zone.Np = 0;
+    QuadTree Q = init_quadtree(0, 0, zone.W_H, zone.W_H, zone.Np);
+    
+    init_fenetre(zone.W_H);
 
-    Particule part;
-    while(zone.Np != 20){
-        part = getParticule(512);
+    for (int i = 0; i < 2000; i++){
+        zone.tab_part[i] = getParticule(512);
+        insert(&Q, zone.tab_part[i], zone);
         zone.Np++;
-        MLV_draw_filled_circle(part.x, part.y, 2, MLV_COLOR_BLACK);
-        MLV_actualise_window();
     }
+    
+    dessineParticules(&zone);
+    dessineZones(Q);
 
     MLV_wait_seconds(10);
     MLV_free_window();

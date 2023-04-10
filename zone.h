@@ -3,6 +3,7 @@
 
 #include "particule.h"
 
+#define NMAX 1000000000
 /**
  * @brief Structure de la zone de travail, avec ses paramètres
  * 
@@ -12,9 +13,10 @@ typedef struct s_zone{
     int wmin; /* La taille minimale d'une feuille (puissance de 4) */
     int Np; /* Nombre de particules */
     int Kp; /* Le nombre max de particules contenu dans une feuille */
-    Particule tab_part[10000000];
+    Particule *tab_part;
 } Zone;
 
+Zone init_zone(int W_H, int wmin, int Np, int Kp);
 
 void init_tab_particule_rand(Zone *zone);
 
