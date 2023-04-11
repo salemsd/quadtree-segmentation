@@ -3,6 +3,7 @@
 void init_fenetre(int W_H){
     MLV_create_window("Quadtree_Segmentation", "Q", W_H, W_H);
     MLV_clear_window(MLV_COLOR_WHITE);
+    MLV_actualise_window();
 }
 
 MLV_Color couleur_transparente(MLV_Color couleur, int alpha){
@@ -15,10 +16,24 @@ MLV_Color couleur_transparente(MLV_Color couleur, int alpha){
     return couleurTransparente;
 }
 
+void gestion_clic(QuadTree *Q, Zone *zone){
+    // CHANGER PLUS TARD POUR GERER LA FERMETURE DE LA FENETRE
+    while(1){
+        zone->tab_part[zone->curlen] = getParticuleOnClic();
+        insert_quadtree(Q, zone->tab_part[zone->curlen], zone, (*Q)->plist);
+        zone->curlen++;
+
+        dessineZones(*Q);
+        dessineParticules(zone);
+    }
+}
+
 void dessineZones(QuadTree Q){
     if (!Q){
         return;
     }
+    
+    MLV_clear_window(MLV_COLOR_WHITE);
 
     MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_BLUE4);
     MLV_draw_filled_rectangle(Q->x1 - 1, Q->y1 - 1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_BLUE, 64));
