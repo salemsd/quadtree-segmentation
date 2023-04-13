@@ -14,10 +14,9 @@ typedef struct s_zone{
     int Np; /* Nombre de particules */
     int Kp; /* Le nombre max de particules contenu dans une feuille */
     Particule *tab_part;
-    int curlen;
 } Zone;
 
-Zone init_zone(int W_H, int wmin, int Np, int Kp);
+Zone init_zone(int W_H, int wmin, int Kp);
 
 void free_tab_part(Zone *zone);
 

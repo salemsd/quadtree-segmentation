@@ -6,7 +6,7 @@
 void test(){
     srand(time(NULL));
 
-    Zone zone = init_zone(512, 8, 200, 10);
+    Zone zone = init_zone(512, 8, 0, 10);
 
     QuadNode *Q = init_quadtree(zone);
 
@@ -15,7 +15,7 @@ void test(){
     // for (int i = 0; i < zone.Np; i++){
     //     zone.tab_part[i] = getParticule(zone.W_H);
     //     insert_quadtree(&Q, zone.tab_part[i], &zone, Q->plist);
-    //     zone.curlen++;
+    //     zone.Np++;
     // }
     
     gestion_clic(&Q, &zone);

@@ -66,7 +66,7 @@ QuadNode *init_quadtree(Zone zone){
 
 void insert_quadtree(QuadTree *Q, Particule p, Zone *zone, ListeCell prev){
     printf("AQliii deg mezwaru\n");
-    ListeCell insere = insere_plist(&(*Q)->plist, &(zone->tab_part[zone->curlen]));
+    ListeCell insere = insere_plist(&(*Q)->plist, &(zone->tab_part[zone->Np]));
     // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
         
     // (*Q)->nbp++;

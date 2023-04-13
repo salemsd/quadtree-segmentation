@@ -19,9 +19,9 @@ MLV_Color couleur_transparente(MLV_Color couleur, int alpha){
 void gestion_clic(QuadTree *Q, Zone *zone){
     // CHANGER PLUS TARD POUR GERER LA FERMETURE DE LA FENETRE
     while(1){
-        zone->tab_part[zone->curlen] = getParticuleOnClic();
-        insert_quadtree(Q, zone->tab_part[zone->curlen], zone, (*Q)->plist);
-        zone->curlen++;
+        zone->tab_part[zone->Np] = getParticuleOnClic();
+        insert_quadtree(Q, zone->tab_part[zone->Np], zone, (*Q)->plist);
+        zone->Np++;
 
         // dessineZones(*Q);
         dessineParticules(zone);

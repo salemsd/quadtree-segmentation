@@ -2,15 +2,14 @@
 
 #include "zone.h"
 
-Zone init_zone(int W_H, int wmin, int Np, int Kp){
+Zone init_zone(int W_H, int wmin, int Kp){
     Zone zone;
     
-    zone.Np = Np;
+    zone.Np = 0;
     zone.Kp = Kp;
     zone.W_H = W_H;
     zone.wmin = wmin;
     zone.tab_part = (Particule *) malloc(NMAX * sizeof(Particule));
-    zone.curlen = 0;
 
     return zone;
 }
