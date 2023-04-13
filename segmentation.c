@@ -6,10 +6,10 @@
 void test(){
     srand(time(NULL));
 
-    Zone zone = init_zone(512, 8, 4, 3);
+    Zone zone = init_zone(512, 8, 200, 10);
 
-    QuadTree Q = init_quadtree(0, 0, zone.W_H, zone.W_H, 0);
-    
+    QuadNode *Q = init_quadtree(zone);
+
     init_fenetre(zone.W_H);
 
     // for (int i = 0; i < zone.Np; i++){
@@ -26,6 +26,13 @@ void test(){
     MLV_free_window();
 }
 
+
 int main(void){
     test();
 }
+
+
+
+
+
+

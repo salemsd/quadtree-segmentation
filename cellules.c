@@ -20,7 +20,7 @@ ListeCell insere_plist(ListeCell * lst, Particule *p){
     ListeCell new_cell = alloue_cellule(p);
 
     if(new_cell){
-        new_cell->next = *lst;
+        new_cell->next = NULL ;
         new_cell->part = p;
     }
 

@@ -23,21 +23,23 @@ void gestion_clic(QuadTree *Q, Zone *zone){
         insert_quadtree(Q, zone->tab_part[zone->curlen], zone, (*Q)->plist);
         zone->curlen++;
 
-        dessineZones(*Q);
+        // dessineZones(*Q);
         dessineParticules(zone);
     }
 }
 
 void dessineZones(QuadTree Q){
-    if (!Q){
+    if (Q->plist != NULL){            
+        MLV_clear_window(MLV_COLOR_WHITE);
+    
+        printf("%d %d %d %d\n", Q->x1, Q->y1, Q->x2, Q->y2);
+        
+        MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_BLUE4);
+        MLV_draw_filled_rectangle(Q->x1 - 1, Q->y1 - 1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_BLUE, 64));
+        MLV_actualise_window();
+
         return;
     }
-    
-    MLV_clear_window(MLV_COLOR_WHITE);
-
-    MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_BLUE4);
-    MLV_draw_filled_rectangle(Q->x1 - 1, Q->y1 - 1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_BLUE, 64));
-    MLV_actualise_window();
 
     dessineZones(Q->n1);
     dessineZones(Q->n2);

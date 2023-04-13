@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -I. -lMLV
+CFLAGS=-Wall -I. -lMLV -lm
 HEADERS = cellules.h particule.h quadtree.h graphique.h zone.h
 OBJ = segmentation.o cellules.o particule.o quadtree.o graphique.o zone.o
 EXEC = segmentation
