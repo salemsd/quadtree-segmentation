@@ -2,6 +2,7 @@
 #define __CELLULES_H
 
 #include "particule.h"
+#include "zone.h"
 
 /**
  * @brief Structure d'une liste de cellules pointant vers des particules
@@ -13,8 +14,10 @@ typedef struct s_plist{
     
 } NoeudCell, *ListeCell;
 
+NoeudCell *init_plist(Zone zone);
+
 ListeCell alloue_cellule(Particule *p) ;
 
-ListeCell insere_plist(ListeCell * lst,Particule *p) ;
+void insere_plist(ListeCell * lst,Particule *p) ;
 
 #endif

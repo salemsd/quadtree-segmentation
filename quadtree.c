@@ -24,7 +24,7 @@ QuadNode *init_quadtree(Zone zone){
             tas[i].nbp = 0;
             tas[i].plist = NULL;
             
-            if (i % 4 == 0 && child_size > zone.wmin){
+            if (child_size > 1){
                 child_size = child_size / 2;
             }
             
@@ -64,28 +64,77 @@ QuadNode *init_quadtree(Zone zone){
     return tas;
 }
 
-void insert_quadtree(QuadTree *Q, Particule p, Zone *zone, ListeCell prev){
-    printf("AQliii deg mezwaru\n");
-    ListeCell insere = insere_plist(&(*Q)->plist, &(zone->tab_part[zone->Np]));
-    // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
+// void insert_quadtree(QuadTree *Q, int indice, Zone *zone){
+//     if ((*Q)->nbp <= zone->Kp || (*Q)->x2 - (*Q)->x1 == zone->wmin){
+//         insere_plist(&((*Q)->plist), &(zone->tab_part[zone->Np]));
+//         (*Q)->nbp++;
+//     }
+//     else if ((*Q)->nbp == zone->Kp){
+//         insere_plist(&((*Q)->plist), &(zone->tab_part[zone->Np]));
+//         (*Q)->nbp++;
+//         insert_quadtree(Q, indice, zone);
+//     }
+//     else if ((*Q)->nbp > zone->Kp){
+//         (*Q)->nbp++;
+//         ListeCell parcours = (*Q)->plist;
         
-    // (*Q)->nbp++;
-    printf("aqli avant n dina\n");
+//         double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
+//         double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
+//         for (; parcours; parcours = parcours->next){
+//             double dist ;
+//             int min_child = 1 ;
 
-    gestion_insert_qt(Q, 0 ,p, zone, insere);
+//             double min_dist = MAX(abs(parcours->part->x - ((Q)[indice]->x1 + xmid)/2), abs(parcours->part->y - ((Q)[indice]->y1 + ymid)/2));
 
-    printf("aqlida\n");
+//             dist = MAX(abs(parcours->part->x - ((Q)[indice]->x2 + xmid)/2), abs(parcours->part->y - (ymid + (Q)[indice]->y1)/2));
 
-    return;
-}
+//             if(dist < min_dist){
+//                 min_dist = dist ;
+//                 min_child = 2 ; 
+//             }
+
+//             dist = MAX(abs(parcours->part->x - (xmid + (Q)[indice]->x2)/2), abs(parcours->part->y - (ymid + (Q)[indice]->y2)/2));
+
+//             if(dist < min_dist){
+//                 min_dist = dist ;
+//                 min_child = 3 ;
+//             }
+
+//             dist = MAX(abs(parcours->part->x - (xmid + (Q)[indice]->x1)/2), abs(parcours->part->y - (ymid + (Q)[indice]->y2)/2));
+//             if(dist < min_dist){
+//                 min_dist = dist ;
+//                 min_child = 4 ;
+//             }
+
+//             insert_quadtree(Q, 4 * indice + min_child, zone);
+//         }
+//     }
+// }
+
+
+
+// void insert_quadtree(QuadTree *Q, Particule p, Zone *zone, ListeCell prev){
+//     printf("AQliii deg mezwaru\n");
+//     ListeCell insere = insere_plist(&(*Q)->plist, &(zone->tab_part[zone->Np]));
+//     // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
+        
+//     // (*Q)->nbp++;
+//     printf("aqli avant n dina\n");
+
+//     gestion_insert_qt(Q, 0 ,p, zone, insere);
+
+//     printf("aqlida\n");
+
+//     return;
+// }
 
 // void gestion_insert_qt(QuadTree *Q, int indice, Particule p, Zone *zone, ListeCell prev) {
 //     /* Recherche du noeud où insérer la particule */
 //     // QuadTree node = find_node(*qt, p);
 //     printf("Avant le if \n");
 //     Particule part_insere ;
-//     double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
-//     double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
+    // double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
+    // double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
 //     printf("juste avant le if \n");
     
     
@@ -147,59 +196,260 @@ void insert_quadtree(QuadTree *Q, Particule p, Zone *zone, ListeCell prev){
 
 // }
 
-void gestion_insert_qt(QuadTree *Q, int indice, Particule p, Zone *zone, ListeCell prev) {
+
+/** TAGI */
+
+void insert_quadtree(QuadTree *Q, ListeCell tab_plist, Zone *zone){
+    printf("AQliii deg mezwaru\n");
+    // ListeCell insere = alloue_cellule(&(zone->tab_part[zone->Np]));
+    // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
+        
+    // (*Q)->nbp++;
+    printf("aqli avant n dina\n");
+
+    gestion_insert_qt(Q, 0, tab_plist, zone);
+
+    printf("aqlida\n");
+
+    return;
+}
+
+void gestion_insert_qt(QuadTree *Q, int indice, ListeCell tab_plist, Zone *zone) {
     /* Recherche du noeud où insérer la particule */
-    Particule part_insere ;
-    double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
-    double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
+    // QuadTree node = find_node(*qt, p);
+    if(Q[indice]->nbp < zone->Kp || Q[indice]->x2 - Q[indice]->x1 == zone->wmin){ 
+        tab_plist[zone->Np].next = (Q[indice]->plist);
+        Q[indice]->plist = &(tab_plist[zone->Np]);
 
-    if ((Q)[indice]->nbp < zone->Kp && (Q)[indice]->plist != NULL) {
-        prev->next = (Q)[indice]->plist;
-        (Q)[indice]->plist = prev;
-        (Q)[indice]->nbp++;
-    } 
-    else {
-        if ((Q)[indice]->nbp == 0) {
-            prev->next = (Q)[indice]->plist;
-            (Q)[indice]->plist = prev;
-            (Q)[indice]->nbp++;
-            return;
-        } 
-        else {
-            // ListeCell tmp = prev ;
-            prev->next = (Q)[indice]->plist;
-            (Q)[indice]->plist = prev;
-            (Q)[indice]->nbp++;
+        Q[indice]->nbp++;
+    }
+    // ON PURGE
+    else if (Q[indice]->nbp == zone->Kp){
+        Q[indice]->nbp++;
+        
+        tab_plist[zone->Np].next = (Q[indice]->plist);
+        Q[indice]->plist = &(tab_plist[zone->Np]);
+        
+        for()
 
-            for (; (Q)[indice]->plist ; (Q)[indice]->plist =(Q)[indice]->plist->next) {
-                part_insere = *(prev->part);
-                double dist;
-                int min_child = 1;
-                double min_dist = MAX(abs(part_insere.x - ((Q)[indice]->x1 + xmid) / 2), abs(part_insere.y - ((Q)[indice]->y1 + ymid) / 2));
+        
+    }
+    // LE NOEUD A DEJA ETE PURGE
+    else{
+        printf("Avant le if , indice : %d\n", indice);
+        printf("Avant le if , x : %d\n", Q[indice]->x1);
+        printf("test , indice : %d\n", indice);
+        double xmid = ((Q[indice])->x1 + (Q[indice])->x2) / 2.0;
+        double ymid = ((Q[indice])->y1 + (Q[indice])->y2) / 2.0;
+        printf("juste avant le if \n");
 
-                dist = MAX(abs(part_insere.x - ((Q)[indice]->x2 + xmid) / 2), abs(part_insere.y - (ymid + (Q)[indice]->y1) / 2));
+        printf("ccccc\n");
+        double dist ;
+        int min_child = 1 ;
 
-                if (dist < min_dist) {
-                    min_dist = dist;
-                    min_child = 2;
-                }
+        Particule p = zone->tab_part[zone->Np];
+        double min_dist = MAX(abs(p.x - (Q[indice]->x1 + xmid)/2), abs(p.y - (Q[indice]->y1 + ymid)/2));
 
-                dist = MAX(abs(part_insere.x - (xmid + (Q)[indice]->x2) / 2), abs(part_insere.y - (ymid + (Q)[indice]->y2) / 2));
+        dist = MAX(abs(p.x - (Q[indice]->x2 + xmid)/2), abs(p.y - (ymid + Q[indice]->y1)/2));
 
-                if (dist < min_dist) {
-                    min_dist = dist;
-                    min_child = 3;
-                }
-
-                dist = MAX(abs(part_insere.x - (xmid + (Q)[indice]->x1) / 2), abs(part_insere.y - (ymid + (Q)[indice]->y2) / 2));
-
-                if (dist < min_dist) {
-                    min_dist = dist;
-                    min_child = 4;
-                }
-
-                gestion_insert_qt(Q, 4 * indice + min_child, part_insere, zone, (Q)[indice]->plist);
-            }
+        if(dist < min_dist){
+            min_dist = dist ;
+            min_child = 2 ; 
         }
+
+        dist = MAX(abs(p.x - (xmid + Q[indice]->x2)/2), abs(p.y - (ymid + Q[indice]->y2)/2));
+
+        if(dist < min_dist){
+            min_dist = dist ;
+            min_child = 3 ;
+        }
+
+        dist = MAX(abs(p.x - (xmid + Q[indice]->x1)/2), abs(p.y - (ymid + Q[indice]->y2)/2));
+        if(dist < min_dist){
+            min_dist = dist ;
+            min_child = 4 ;
+        }
+        printf("min child : %d \n",min_child);
+        printf("indice :%d \n",indice);   
+        
+        
+        gestion_insert_qt(Q, (4 * indice  + min_child), tab_plist, zone);
+        return ;
     }
 }
+
+
+
+
+
+
+// void insert_quadtree(QuadTree *Q, Particule p, Zone *zone){
+//     printf("AQliii deg mezwaru\n");
+//     ListeCell insere = alloue_cellule(&(zone->tab_part[zone->Np]));
+//     // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
+        
+//     // (*Q)->nbp++;
+//     printf("aqli avant n dina\n");
+
+//     gestion_insert_qt(Q, 0 ,p, zone, insere);
+
+//     printf("aqlida\n");
+
+//     return;
+// }
+
+// void gestion_insert_qt(QuadTree *Q, int indice, Particule p, Zone *zone, ListeCell insere) {
+//     /* Recherche du noeud où insérer la particule */
+//     // QuadTree node = find_node(*qt, p);
+//     printf("Avant le if , indice : %d\n", indice);
+//     printf("Avant le if , x : %d\n", Q[indice]->x1);
+//     printf("test , indice : %d\n", indice);
+//     double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
+//     double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
+//     printf("juste avant le if \n");
+    
+//     if(Q[indice]->nbp < zone->Kp ){
+//         printf("aaaaa\n");
+//         insere->next = Q[indice]->plist ;
+//         Q[indice]->plist = insere ;
+//         Q[indice]->nbp ++ ;
+//         return ; 
+//     }
+//     // ON PURGE
+//     else if (Q[indice]->nbp == zone->Kp){
+//         printf("bbbbb\n");
+//         Q[indice]->nbp++;
+//         printf("Aprses le else \n");
+//         insere->next = (Q)[indice]->plist ;
+//         (Q)[indice]->plist = insere ;
+        
+//         // ListeCell parcours = Q[indice]->plist;
+//         while (Q[indice]->plist){
+//             NoeudCell *sauv_next = Q[indice]->plist->next;
+//             NoeudCell *new_insere = Q[indice]->plist;
+//             printf("avant new: %p | newnext: %p | parcours : %p | parcoursnext : %p\n", new_insere, new_insere->next, Q[indice]->plist, Q[indice]->plist->next);
+//             new_insere->next = NULL;
+//             printf("apres new: %p | newnext: %p | parcours : %p | parcoursnext : %p\n", new_insere, new_insere->next, Q[indice]->plist, Q[indice]->plist->next);
+//             gestion_insert_qt(Q, indice, p, zone, new_insere);
+            
+//             Q[indice]->plist->next = sauv_next;
+//         }
+        
+//         Q[indice]->plist = NULL;
+
+//     }
+//     // LE NOEUD A DEJA ETE PURGE
+//     else{
+//         printf("ccccc\n");
+//         double dist ;
+//         int min_child = 1 ;
+
+//         double min_dist = MAX(abs(p.x - ((Q)[indice]->x1 + xmid)/2), abs(p.y - ((Q)[indice]->y1 + ymid)/2));
+
+//         dist = MAX(abs(p.x - ((Q)[indice]->x2 + xmid)/2), abs(p.y - (ymid + (Q)[indice]->y1)/2));
+
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 2 ; 
+//         }
+
+//         dist = MAX(abs(p.x - (xmid + (Q)[indice]->x2)/2), abs(p.y - (ymid + (Q)[indice]->y2)/2));
+
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 3 ;
+//         }
+
+//         dist = MAX(abs(p.x - (xmid + (Q)[indice]->x1)/2), abs(p.y - (ymid + (Q)[indice]->y2)/2));
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 4 ;
+//         }
+//         printf("min child : %d \n",min_child);
+//         printf("indice :%d \n",indice);   
+//         gestion_insert_qt(Q, (4 * indice  + min_child), p, zone, insere);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void insert_quadtree(QuadTree *Q, Particule p, Zone *zone){
+//     printf("AQliii deg mezwaru\n");
+//     insere_plist(&((*Q)->plist), &(zone->tab_part[zone->Np]));
+
+//     printf("aqli avant n dina\n");
+
+//     gestion_insert_qt(Q, 0 ,p, zone, NULL);
+
+//     printf("aqlida\n");
+
+//     return;
+// }
+
+// void gestion_insert_qt(QuadTree *Q, int indice, Particule p, Zone *zone, ListeCell prev) {
+//     /* Recherche du noeud où insérer la particule */
+//     // QuadTree node = find_node(*qt, p);
+//     // printf("Avant le if \n");
+//     Particule part_insere ;
+//     double xmid = ((Q)[indice]->x1 + (Q)[indice]->x2) / 2.0;
+//     double ymid = ((Q)[indice]->y1 + (Q)[indice]->y2) / 2.0;
+//     // printf("juste avant le if \n");
+    
+//     if(Q[indice]->nbp < zone->Kp ){
+//         Q[indice]->nbp ++;
+//         return ; 
+//     }
+//     else if( Q[indice]->plist == NULL && Q[indice]->nbp > zone->Kp){
+//         double dist ;
+//         int min_child = 1 ;
+
+//         double min_dist = MAX(abs(p.x - ((Q)[indice]->x1 + xmid)/2), abs(p.y - ((Q)[indice]->y1 + ymid)/2));
+
+//         dist = MAX(abs(p.x - ((Q)[indice]->x2 + xmid)/2), abs(p.y - (ymid + (Q)[indice]->y1)/2));
+
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 2 ; 
+//         }
+
+//         dist = MAX(abs(p.x - (xmid + (Q)[indice]->x2)/2), abs(p.y - (ymid + (Q)[indice]->y2)/2));
+
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 3 ;
+//         }
+
+//         dist = MAX(abs(p.x - (xmid + (Q)[indice]->x1)/2), abs(p.y - (ymid + (Q)[indice]->y2)/2));
+//         if(dist < min_dist){
+//             min_dist = dist ;
+//             min_child = 4 ;
+//         }
+//         // printf("min child : %d \n",min_child);
+//         // printf("indice :%d \n",indice);
+            
+//         gestion_insert_qt(Q, (4 * indice  + min_child), p, zone, NULL);
+
+//     }
+//     else if (Q[indice]->nbp <= zone->Kp && Q[indice]->plist != NULL){
+//         printf("Aprses le else \n");
+//         ListeCell parcours = Q[indice]->plist;
+//         while(parcours != NULL){
+//             parcours = parcours->next;
+//             // printf(" tmp : %p : tmp->next : %p : prev : %p \n", tmp, tmp->next, prev);
+            
+//             gestion_insert_qt(Q, indice, *(parcours->part), zone, NULL);
+//         }
+//     }
+// }

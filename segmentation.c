@@ -6,17 +6,16 @@
 void test(){
     srand(time(NULL));
 
-    Zone zone = init_zone(512, 8, 0, 10);
+    Zone zone = init_zone(512, 8, 4);
+    // ListeCell tab_plist = init_plist(zone);
 
     QuadNode *Q = init_quadtree(zone);
 
-    init_fenetre(zone.W_H);
+    for (int i = 0; i < 15; i++){
+        printf("x1 %d y1 %d x2 %d y2 %d\n", Q[i].x1, Q[i].y1, Q[i].x2, Q[i].y2);
+    }
 
-    // for (int i = 0; i < zone.Np; i++){
-    //     zone.tab_part[i] = getParticule(zone.W_H);
-    //     insert_quadtree(&Q, zone.tab_part[i], &zone, Q->plist);
-    //     zone.Np++;
-    // }
+    init_fenetre(zone.W_H);
     
     gestion_clic(&Q, &zone);
 
