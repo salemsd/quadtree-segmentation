@@ -11,6 +11,7 @@
 typedef struct s_plist{
     struct s_plist *next; /* Pointeur vers les cellules du même noeud */
     Particule *part; /* Pointeur vers une particule */
+    int indice ;
     
 } NoeudCell, *ListeCell;
 

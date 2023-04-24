@@ -7,8 +7,7 @@ void test(){
     srand(time(NULL));
 
     Zone zone = init_zone(512, 8, 4);
-    // ListeCell tab_plist = init_plist(zone);
-
+    ListeCell tab_plist = init_plist(zone);
     QuadNode *Q = init_quadtree(zone);
 
     for (int i = 0; i < 15; i++){
@@ -17,7 +16,7 @@ void test(){
 
     init_fenetre(zone.W_H);
     
-    gestion_clic(&Q, &zone);
+    gestion_clic(Q, tab_plist, &zone);
 
     MLV_wait_seconds(100);
 

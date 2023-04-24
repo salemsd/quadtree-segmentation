@@ -18,8 +18,8 @@ typedef struct s_quadtree{
 
 QuadNode *init_quadtree(Zone zone);
 
-void insert_quadtree(QuadTree *Q, ListeCell tab_plist, Zone *zone);
+void insert_quadtree(QuadTree Q, ListeCell tab_plist, Zone *zone);
 
-void gestion_insert_qt(QuadTree *Q, ListeCell tab_plist, int indice, Zone *zone);
+void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_plist, Zone *zone);
 
 #endif
