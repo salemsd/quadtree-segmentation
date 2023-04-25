@@ -65,16 +65,16 @@ QuadNode *init_quadtree(Zone zone){
 }
 
 void insert_quadtree(QuadTree Q, ListeCell tab_plist, Zone *zone){
-    printf("1A\n");
+    // printf("1A\n");
     // ListeCell insere = alloue_cellule(&(zone->tab_part[zone->Np]));
     // (*Q)->plist = (insere != NULL) ? insere : (*Q)->plist;
         
     // (*Q)->nbp++;
-    printf("1B\n");
+    // printf("1B\n");
 
     gestion_insert_qt(Q, 0, zone->Np, tab_plist, zone);
 
-    printf("1C\n");
+    // printf("1C\n");
 
     return;
 }
@@ -82,41 +82,47 @@ void insert_quadtree(QuadTree Q, ListeCell tab_plist, Zone *zone){
 void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_plist, Zone *zone) {
     /* Recherche du noeud où insérer la particule */
     // QuadTree node = find_node(*qt, p);
-    if(Q[indice].nbp < zone->Kp || Q[indice].x2 - Q[indice].x1 == zone->wmin){ 
-
+    // printf("nbp avant if %d\n",Q[indice].nbp);
+    if(Q[indice].nbp + 1 < zone->Kp || Q[indice].x2 - Q[indice].x1 == zone->wmin){ 
+        printf("indice apre if %d \n", indice);
         tab_plist[indice_tab].next = (Q[indice].plist);
         Q[indice].plist = &(tab_plist[indice_tab]);
 
         Q[indice].nbp++;
+        printf("nbp a l'interieur du if %d\n",Q[indice].nbp);
+        // printf("nbp if %d\n",Q[indice].nbp);
+        return ;
     }
     // ON PURGE
-    else if (Q[indice].nbp == zone->Kp){
+    else if (Q[indice].nbp + 1 == zone->Kp){
         Q[indice].nbp++;
         
         tab_plist[indice_tab].next = (Q[indice].plist);
         Q[indice].plist = &(tab_plist[indice_tab]);
         
         int i ;
-        ListeCell parcours = Q[indice].plist;
-        while(parcours){
-            i = parcours->indice ;
-            
+        // printf("nbp %d\n",Q[indice].nbp);
+        while(Q[indice].plist){
+            i = Q[indice].plist->indice ;
+            // printf(" x%g : y%g : i %d \n",tab_plist[i].part->x, tab_plist[i].part->y, i);
+            // printf("indice avant while %d \n", indice);
+            Q[indice].plist = Q[indice].plist->next;
             gestion_insert_qt(Q, indice, i, tab_plist, zone) ;
-            parcours = parcours->next;
-        }    
-
-        Q[indice].plist = NULL;
+            // printf("indice apre while %d \n", indice);
+        }
+        // printf("rjfrfr\n");
     }
     // LE NOEUD A DEJA ETE PURGE
     else{
-        printf("Avant le if , indice : %d\n", indice);
-        printf("Avant le if , x : %d\n", Q[indice].x1);
-        printf("test , indice : %d\n", indice);
+        printf("nbp else %d\n",Q[indice].nbp);
+        // printf("Avant le if , indice : %d\n", indice);
+        // printf("Avant le if , x : %d\n", Q[indice].x1);
+        // printf("test , indice : %d\n", indice);
         double xmid = ((Q[indice]).x1 + (Q[indice]).x2) / 2.0;
         double ymid = ((Q[indice]).y1 + (Q[indice]).y2) / 2.0;
-        printf("juste avant le if \n");
+        // printf("juste avant le if \n");
 
-        printf("ccccc\n");
+        // printf("ccccc\n");
         double dist ;
         int min_child = 1 ;
 
@@ -142,8 +148,8 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
             min_dist = dist ;
             min_child = 4 ;
         }
-        printf("min child : %d \n",min_child);
-        printf("indice :%d \n",indice);   
+        // printf("min child : %d \n",min_child);
+        // printf("indice :%d \n",indice);   
         
         
         gestion_insert_qt(Q, (4 * indice  + min_child), indice_tab ,tab_plist, zone);

@@ -3,14 +3,7 @@
 #include "cellules.h"
 
 NoeudCell *init_plist(Zone zone){
-    NoeudCell *new_plist = (NoeudCell *) malloc(NMAX * sizeof(NoeudCell));
-    if( new_plist){
-        for(int i = 0 ; i < 50; i++){
-            new_plist[i].part = &(zone.tab_part[i]);
-            new_plist[i].next = NULL;
-            new_plist[i].indice = i ;       
-        }
-    }
+    NoeudCell *new_plist = (NoeudCell *) calloc(NMAX, sizeof(NoeudCell));
 
     return new_plist;
 }
