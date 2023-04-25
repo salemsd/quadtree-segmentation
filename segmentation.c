@@ -4,19 +4,32 @@
 #include <time.h>
 
 void test(){
+    int mode = 0; /* Par défaut 0: Clic souris; 1: Aléatoire */
     srand(time(NULL));
+    Zone zone;
 
-    Zone zone = init_zone(512, 8, 4);
-    ListeCell tab_plist = init_plist(zone);
-    QuadNode *Q = init_quadtree(zone);
+    /* Clic souris */
+    if (mode == 0){
+        zone = init_zone(NMAX, 1024, 4, 5);
+        ListeCell tab_plist = init_plist(zone, NMAX);
+        QuadNode *Q = init_quadtree(zone);
 
-    for (int i = 0; i < 15; i++){
-        printf("x1 %d y1 %d x2 %d y2 %d\n", Q[i].x1, Q[i].y1, Q[i].x2, Q[i].y2);
+        init_fenetre(zone.W_H);
+
+        gestion_clic(Q, tab_plist, &zone);
     }
+    /* Aléatoire */
+    else{
+        int nbPoint = 20;
 
-    init_fenetre(zone.W_H);
-    
-    gestion_clic(Q, tab_plist, &zone);
+        zone = init_zone(nbPoint, 1024, 4, 5);
+        ListeCell tab_plist = init_plist(zone, nbPoint);
+        QuadNode *Q = init_quadtree(zone);
+
+        init_fenetre(zone.W_H);
+
+        fill_tabs(&zone, tab_plist, nbPoint);
+    }
 
     MLV_wait_seconds(100);
 

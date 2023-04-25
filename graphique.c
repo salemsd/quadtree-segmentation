@@ -24,65 +24,37 @@ void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone){
         tab_plist[zone->Np].indice = zone->Np;
         tab_plist[zone->Np].next = NULL;
         
-        
         insert_quadtree(Q, tab_plist, zone);
         zone->Np++;
 
-        // while(parcours[indice].plist == NULL ){
-        //     printf("dans LE WHILE \n");
-        //     indice = (4 * indice) + 1 ;
-
-        //     parcours = parcours + indice;
-        // }
-        // printf("APRE LE WHILE \n");
-        // for(; parcours[indice].plist; parcours[indice].plist = parcours[indice].plist->next){
-        //     printf("x%g y%g\n", parcours[indice].plist->part->x, parcours[indice].plist->part->y);
-        //     // printf("zebbi\n");
-        // }
         MLV_clear_window(MLV_COLOR_WHITE);
-        dessineZones(Q, 0);
+        dessineZones(Q, *zone, 0);
         dessineParticules(zone);
     }
 }
 
-// void dessineZones(QuadTree Q){
-//     if (Q == NULL){
-//         return;
-//     }
-//     if (Q->plist != NULL){
+void gestion_aleatoire(QuadTree Q, ListeCell tab_plist, Zone *zone, int nbPoint){
     
-//         printf("%d %d %d %d\n", Q->x1, Q->y1, Q->x2, Q->y2);
-        
-//         MLV_draw_rectangle(Q->x1, Q->y1, Q->x2 - Q->x1, Q->y2 - Q->y1, MLV_COLOR_BLUE4);
-//         MLV_draw_filled_rectangle(Q->x1 - 1, Q->y1 - 1, Q->x2 - Q->x1, Q->y2 - Q->y1, couleur_transparente(MLV_COLOR_BLUE, 64));
-//         MLV_actualise_window();
+    while(1){
+        for(int i = 0; i < nbPoint ; i++){
+            
+        }
+    }
+}
 
-//         return;
-//     }
-
-//     dessineZones(Q->n1);
-//     dessineZones(Q->n2);
-//     dessineZones(Q->n3);
-//     dessineZones(Q->n4); 
-// }
-
-void dessineZones(QuadTree Q, int indice){
-    printf("AAA indice ;  %d\n", indice );
-
-    if (Q[indice].nbp < 4 && Q[indice].plist != NULL){
-        printf("%d %d %d %d\n", Q[indice].x1, Q[indice].y1, Q[indice].x2, Q[indice].y2);
-
+void dessineZones(QuadTree Q, Zone zone, int indice){
+    if ((Q[indice].nbp < zone.Kp && Q[indice].plist != NULL) || Q[indice].x2 - Q[indice].x1 <= zone.wmin){
         MLV_draw_rectangle(Q[indice].x1, Q[indice].y1, Q[indice].x2 - Q[indice].x1, Q[indice].y2 - Q[indice].y1, MLV_COLOR_BLUE4);
         MLV_draw_filled_rectangle(Q[indice].x1 - 1, Q[indice].y1 - 1, Q[indice].x2 - Q[indice].x1, Q[indice].y2 - Q[indice].y1, couleur_transparente(MLV_COLOR_BLUE, 64));
         MLV_actualise_window();
 
         return;
     }
-    else if (Q[indice].nbp >= 4 && Q[indice].plist == NULL){
-        dessineZones(Q, 4 * indice + 1);
-        dessineZones(Q, 4 * indice + 2);
-        dessineZones(Q, 4 * indice + 3);
-        dessineZones(Q, 4 * indice + 4);
+    else if (Q[indice].nbp >= zone.Kp && Q[indice].plist == NULL){
+        dessineZones(Q, zone, 4 * indice + 1);
+        dessineZones(Q, zone, 4 * indice + 2);
+        dessineZones(Q, zone, 4 * indice + 3);
+        dessineZones(Q, zone, 4 * indice + 4);
     }
 }
 

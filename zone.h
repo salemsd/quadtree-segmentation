@@ -16,7 +16,7 @@ typedef struct s_zone{
     Particule *tab_part;
 } Zone;
 
-Zone init_zone(int W_H, int wmin, int Kp);
+Zone init_zone(int nbPoint, int W_H, int wmin, int Kp);
 
 void free_tab_part(Zone *zone);
 

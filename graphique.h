@@ -13,7 +13,9 @@ MLV_Color couleur_transparente(MLV_Color couleur, int alpha);
 
 void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone);
 
-void dessineZones(QuadTree Q, int indice);
+void gestion_aleatoire(QuadTree Q, ListeCell tab_plist, Zone *zone, int nbPoint);
+
+void dessineZones(QuadTree Q, Zone zone, int indice);
 
 void dessineParticules(Zone *zone);
 

@@ -2,14 +2,14 @@
 
 #include "zone.h"
 
-Zone init_zone(int W_H, int wmin, int Kp){
+Zone init_zone(int nbPoint, int W_H, int wmin, int Kp){
     Zone zone;
     
     zone.Np = 0;
     zone.Kp = Kp;
     zone.W_H = W_H;
     zone.wmin = wmin;
-    zone.tab_part = (Particule *) malloc(NMAX * sizeof(Particule));
+    zone.tab_part = (Particule *) malloc(nbPoint * sizeof(Particule));
 
     return zone;
 }

@@ -15,10 +15,12 @@ typedef struct s_plist{
     
 } NoeudCell, *ListeCell;
 
-NoeudCell *init_plist(Zone zone);
+NoeudCell *init_plist(Zone zone, int nbPoint);
 
 ListeCell alloue_cellule(Particule *p) ;
 
 void insere_plist(ListeCell * lst,Particule *p) ;
+
+void fill_tabs(Zone *zone, ListeCell tab_plist,int nbPoint);
 
 #endif
