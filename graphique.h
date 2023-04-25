@@ -15,6 +15,8 @@ void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone);
 
 void gestion_aleatoire(QuadTree Q, ListeCell tab_plist, Zone *zone, int nbPoint);
 
+int touche_bord(Zone zone, int i);
+
 void dessineZones(QuadTree Q, Zone zone, int indice);
 
 void dessineParticules(Zone *zone);

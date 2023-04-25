@@ -23,4 +23,6 @@ void insere_plist(ListeCell * lst,Particule *p) ;
 
 void fill_tabs(Zone *zone, ListeCell tab_plist,int nbPoint);
 
+void reset_plist(ListeCell tab_plist, int nbPoint);
+
 #endif

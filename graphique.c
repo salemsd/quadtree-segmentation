@@ -34,12 +34,72 @@ void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone){
 }
 
 void gestion_aleatoire(QuadTree Q, ListeCell tab_plist, Zone *zone, int nbPoint){
-    
+    int base = 0;
     while(1){
+        zone->Np = 0;
         for(int i = 0; i < nbPoint ; i++){
+            if (base == 0){
+                insert_quadtree(Q, tab_plist, zone);
+                zone->Np++;
+            }
             
+
+            // Bord gauche et droit
+            if (touche_bord(*zone, i) == 1) {
+                zone->tab_part[i].dx = -zone->tab_part[i].dx;
+            }
+            // Bord haut et bas
+            else if (touche_bord(*zone, i) == 2) {
+                zone->tab_part[i].dy = -zone->tab_part[i].dy;
+            }
+            // Bord gauche et doit + bord haut et bas
+            else if (touche_bord(*zone, i) == 3){
+                zone->tab_part[i].dx = -zone->tab_part[i].dx;
+                zone->tab_part[i].dy = -zone->tab_part[i].dy;
+            }
+
+            MLV_clear_window(MLV_COLOR_WHITE);
+            dessineZones(Q, *zone, 0);
+            dessineParticules(zone);
+            MLV_wait_milliseconds(500);
+            if (base == 1){
+                update_quadtree(Q,0,i,tab_plist,zone);
+                
+                printf("dx %d dy %d, avant x %g y %g\n", zone->tab_part[i].dx, zone->tab_part[i].dy, zone->tab_part[i].x, zone->tab_part[i].y);
+                zone->tab_part[i].x += zone->tab_part[i].dx;
+                zone->tab_part[i].y += zone->tab_part[i].dy;
+                printf("après x %g y %g\n", zone->tab_part[i].x, zone->tab_part[i].y);
+                
+                insert_quadtree(Q, tab_plist, zone);
+                zone->Np++;
+            }
+
         }
+        
+        base = 1;
+
+        // reset_quadtree(Q, *zone, 0);
     }
+}
+
+int touche_bord(Zone zone, int i){
+    int x_part = zone.tab_part[i].x;
+    int y_part = zone.tab_part[i].y;
+    
+    // Touche bord droit ou gauche ET haut ou bas
+    if ((x_part >= (zone.W_H - 1) || x_part <= 0) && (y_part >= (zone.W_H - 1) || y_part <= 0)){
+        return 3;
+    }
+    // Touche bord droit ou gauche
+    if (x_part >= (zone.W_H - 1) || x_part <= 0){
+        return 1;
+    }
+    // Touche bord haut ou bas
+    if (y_part >= (zone.W_H - 1) || y_part <= 0){
+        return 2;
+    }
+
+    return 0;
 }
 
 void dessineZones(QuadTree Q, Zone zone, int indice){
