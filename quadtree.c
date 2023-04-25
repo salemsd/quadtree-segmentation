@@ -14,7 +14,7 @@ QuadNode *init_quadtree(Zone zone){
     QuadNode *tas = (QuadNode *) malloc(nb_noeud * sizeof(QuadNode));
     
     if(tas){
-        int child_size = zone.W_H;
+        // int child_size = zone.W_H;
         tas[0].x1 = 0;
         tas[0].y1 = 0;
         tas[0].x2 = zone.W_H;
@@ -23,10 +23,6 @@ QuadNode *init_quadtree(Zone zone){
         for (int i = 0; i < nb_noeud; i++){
             tas[i].nbp = 0;
             tas[i].plist = NULL;
-            
-            // if (child_size > 1){
-            //     child_size = child_size / 2;
-            // }
             
             // int x1_children[4] = {tas[i].x1, tas[i].x1 + child_size, tas[i].x1 + child_size, tas[i].x1};
             // int y1_children[4] = {tas[i].y1, tas[i].y1, tas[i].y1 + child_size, tas[i].y1 + child_size};
@@ -154,6 +150,33 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
         // printf("indice :%d \n",indice);   
         
         
+        switch (min_child) {
+            case 1:
+                Q[4 * indice + min_child].x1 = Q[indice].x1;
+                Q[4 * indice + min_child].y1 = Q[indice].y1;
+                Q[4 * indice + min_child].x2 = xmid;
+                Q[4 * indice + min_child].y2 = ymid;
+                break;
+            case 2:
+                Q[4 * indice + min_child].x1 = xmid;
+                Q[4 * indice + min_child].y1 = Q[indice].y1;
+                Q[4 * indice + min_child].x2 = Q[indice].x2;
+                Q[4 * indice + min_child].y2 = ymid;
+                break;
+            case 4:
+                Q[4 * indice + min_child].x1 = Q[indice].x1;
+                Q[4 * indice + min_child].y1 = ymid;
+                Q[4 * indice + min_child].x2 = xmid;
+                Q[4 * indice + min_child].y2 = Q[indice].y2;
+                break;
+            case 3:
+                Q[4 * indice + min_child].x1 = xmid;
+                Q[4 * indice + min_child].y1 = ymid;
+                Q[4 * indice + min_child].x2 = Q[indice].x2;
+                Q[4 * indice + min_child].y2 = Q[indice].y2;
+                break;
+        }
+        printf(" minchild : %d \n",min_child);
         gestion_insert_qt(Q, (4 * indice  + min_child), indice_tab ,tab_plist, zone);
         return ;
     }

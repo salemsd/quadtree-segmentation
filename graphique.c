@@ -40,7 +40,7 @@ void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone){
         //     // printf("zebbi\n");
         // }
         MLV_clear_window(MLV_COLOR_WHITE);
-        // dessineZones(Q, 0);
+        dessineZones(Q, 0);
         dessineParticules(zone);
     }
 }
