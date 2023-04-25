@@ -24,40 +24,40 @@ QuadNode *init_quadtree(Zone zone){
             tas[i].nbp = 0;
             tas[i].plist = NULL;
             
-            if (child_size > 1){
-                child_size = child_size / 2;
-            }
+            // if (child_size > 1){
+            //     child_size = child_size / 2;
+            // }
             
-            int x1_children[4] = {tas[i].x1, tas[i].x1 + child_size, tas[i].x1 + child_size, tas[i].x1};
-            int y1_children[4] = {tas[i].y1, tas[i].y1, tas[i].y1 + child_size, tas[i].y1 + child_size};
+            // int x1_children[4] = {tas[i].x1, tas[i].x1 + child_size, tas[i].x1 + child_size, tas[i].x1};
+            // int y1_children[4] = {tas[i].y1, tas[i].y1, tas[i].y1 + child_size, tas[i].y1 + child_size};
 
-            int x2_children[4] = {tas[i].x1 + child_size, tas[i].x2, tas[i].x2, tas[i].x1 + child_size};
-            int y2_children[4] = {tas[i].y1 + child_size, tas[i].y1 + child_size, tas[i].y2, tas[i].y2};
+            // int x2_children[4] = {tas[i].x1 + child_size, tas[i].x2, tas[i].x2, tas[i].x1 + child_size};
+            // int y2_children[4] = {tas[i].y1 + child_size, tas[i].y1 + child_size, tas[i].y2, tas[i].y2};
             
             tas[i].n1 = &(tas[4*i + 1]);
             tas[i].n2 = &(tas[4*i + 2]);
             tas[i].n3 = &(tas[4*i + 3]);
             tas[i].n4 = &(tas[4*i + 4]);
 
-            tas[i].n1->x1 = x1_children[0];
-            tas[i].n1->x2 = x2_children[0];
-            tas[i].n1->y1 = y1_children[0];
-            tas[i].n1->y2 = y2_children[0];
+            // tas[i].n1->x1 = x1_children[0];
+            // tas[i].n1->x2 = x2_children[0];
+            // tas[i].n1->y1 = y1_children[0];
+            // tas[i].n1->y2 = y2_children[0];
 
-            tas[i].n2->x1 = x1_children[1];
-            tas[i].n2->x2 = x2_children[1];
-            tas[i].n2->y1 = y1_children[1];
-            tas[i].n2->y2 = y2_children[1];
+            // tas[i].n2->x1 = x1_children[1];
+            // tas[i].n2->x2 = x2_children[1];
+            // tas[i].n2->y1 = y1_children[1];
+            // tas[i].n2->y2 = y2_children[1];
             
-            tas[i].n3->x1 = x1_children[2];
-            tas[i].n3->x2 = x2_children[2];
-            tas[i].n3->y1 = y1_children[2];
-            tas[i].n3->y2 = y2_children[2];
+            // tas[i].n3->x1 = x1_children[2];
+            // tas[i].n3->x2 = x2_children[2];
+            // tas[i].n3->y1 = y1_children[2];
+            // tas[i].n3->y2 = y2_children[2];
 
-            tas[i].n4->x1 = x1_children[3];
-            tas[i].n4->x2 = x2_children[3];
-            tas[i].n4->y1 = y1_children[3];
-            tas[i].n4->y2 = y2_children[3];
+            // tas[i].n4->x1 = x1_children[3];
+            // tas[i].n4->x2 = x2_children[3];
+            // tas[i].n4->y1 = y1_children[3];
+            // tas[i].n4->y2 = y2_children[3];
         }
     }
 
@@ -83,13 +83,14 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
     /* Recherche du noeud où insérer la particule */
     // QuadTree node = find_node(*qt, p);
     // printf("nbp avant if %d\n",Q[indice].nbp);
-    if(Q[indice].nbp + 1 < zone->Kp || Q[indice].x2 - Q[indice].x1 == zone->wmin){ 
-        printf("indice apre if %d \n", indice);
+    if(Q[indice].nbp + 1 < zone->Kp || Q[indice].x2 - Q[indice].x1 <= zone->wmin){
+        // printf("indice apre if %d \n", indice);
         tab_plist[indice_tab].next = (Q[indice].plist);
         Q[indice].plist = &(tab_plist[indice_tab]);
 
         Q[indice].nbp++;
-        printf("nbp a l'interieur du if %d\n",Q[indice].nbp);
+        printf("indice : %d , indice_tab %d , x : %g , y : %g , x1 : %d , x2 : %d, y1 : %d , y2 : %d\n", indice, indice_tab, Q[indice].plist->part->x, Q[indice].plist->part->y,Q[indice].x1,Q[indice].x2,Q[indice].y1,Q[indice].y2);
+        // printf("nbp a l'interieur du if %d\n",Q[indice].nbp);
         // printf("nbp if %d\n",Q[indice].nbp);
         return ;
     }
@@ -110,11 +111,12 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
             gestion_insert_qt(Q, indice, i, tab_plist, zone) ;
             // printf("indice apre while %d \n", indice);
         }
+        Q[indice].plist = NULL ;
         // printf("rjfrfr\n");
     }
     // LE NOEUD A DEJA ETE PURGE
     else{
-        printf("nbp else %d\n",Q[indice].nbp);
+        // printf("nbp else %d\n",Q[indice].nbp);
         // printf("Avant le if , indice : %d\n", indice);
         // printf("Avant le if , x : %d\n", Q[indice].x1);
         // printf("test , indice : %d\n", indice);
