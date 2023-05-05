@@ -129,7 +129,7 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
 void reset_quadtree(QuadTree Q, Zone zone, int indice){
     Q[indice].nbp = 0;
     
-    if ((Q[indice].nbp < zone.Kp && Q[indice].plist != NULL) || Q[indice].x2 - Q[indice].x1 <= zone.wmin){
+    if ((Q[indice].plist != NULL) || Q[indice].x2 - Q[indice].x1 <= zone.wmin){
         while(Q[indice].plist){
             ListeCell reset = Q[indice].plist;
             Q[indice].plist = Q[indice].plist->next;
@@ -140,7 +140,7 @@ void reset_quadtree(QuadTree Q, Zone zone, int indice){
         
         return;
     }
-    else if (Q[indice].nbp >= zone.Kp && Q[indice].plist == NULL){
+    else if (Q[indice].plist == NULL){
         reset_quadtree(Q, zone, 4 * indice + 1);
         reset_quadtree(Q, zone, 4 * indice + 2);
         reset_quadtree(Q, zone, 4 * indice + 3);
@@ -148,94 +148,9 @@ void reset_quadtree(QuadTree Q, Zone zone, int indice){
     }
 }
 
-void update_quadtree(QuadTree Q, int indice, int indice_tab, ListeCell tab_plist, Zone *zone){
-    if(Q[indice].nbp <= zone->Kp ){
-        ListeCell parcours;
-        int jspp = 0 ;
-        if (Q[indice].n1->plist){
-            jspp = 1 ;
-            parcours = Q[indice].n1->plist;
-            for (; parcours->next; parcours = parcours->next);
-            parcours->next = Q[indice].n2->plist;
 
-            Q[indice].plist = Q[indice].n1->plist;
-            Q[indice].n1->plist = NULL;
-        }
-        if(Q[indice].n2->plist){
-            parcours = Q[indice].n2->plist;
-            for (; parcours->next; parcours = parcours->next);
-            parcours->next = Q[indice].n3->plist;
-            if( !jspp){
-                Q[indice].plist = Q[indice].n2->plist;
-                Q[indice].n2->plist = NULL;
-                jspp = 1 ;
-            }
-        }
-        if(Q[indice].n3->plist){
-            parcours = Q[indice].n3->plist;
-            for (; parcours->next; parcours = parcours->next);
-            parcours->next = Q[indice].n4->plist;
-            if(!jspp ){
-                Q[indice].plist = Q[indice].n3->plist;
-                Q[indice].n3->plist = NULL;
-                jspp = 1 ;
-            }
-        }
-        if(Q[indice].n4->plist){
-            if (!jspp){
-                Q[indice].plist = Q[indice].n4->plist;
-                Q[indice].n4->plist = NULL;
-                jspp = 1;
-            }
-        }
-
-        Particule p = zone->tab_part[indice_tab];
-        parcours = Q[indice].plist;
-        if (Q[indice].plist->part->x == p.x && Q[indice].plist->part->y == p.y){
-            Q[indice].plist = Q[indice].plist->next;
-        }
-        else{
-            for (; parcours->next && parcours->next->part->x != p.x && parcours->next->part->y != p.y; parcours = parcours->next);
-            ListeCell supp = parcours->next;
-            parcours->next = parcours->next->next;
-            supp->next = NULL;
-        }
-
-        return ;
-    }
-    else{
-
-        double xmid = ((Q[indice]).x1 + (Q[indice]).x2) / 2.0;
-        double ymid = ((Q[indice]).y1 + (Q[indice]).y2) / 2.0;
-
-        double dist ;
-        int min_child = 1 ;
-
-        Particule p = zone->tab_part[indice_tab];
-        double min_dist = MAX(abs(p.x - (Q[indice].x1 + xmid)/2), abs(p.y - (Q[indice].y1 + ymid)/2));
-
-        dist = MAX(abs(p.x - (Q[indice].x2 + xmid)/2), abs(p.y - (ymid + Q[indice].y1)/2));
-
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 2 ; 
-        }
-
-        dist = MAX(abs(p.x - (xmid + Q[indice].x2)/2), abs(p.y - (ymid + Q[indice].y2)/2));
-
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 3 ;
-        }
-
-        dist = MAX(abs(p.x - (xmid + Q[indice].x1)/2), abs(p.y - (ymid + Q[indice].y2)/2));
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 4 ;
-        }
-
-        update_quadtree(Q, (4 * indice  + min_child), indice_tab ,tab_plist, zone);
-        
-        return ;
-    }  
+void free_quadtree(QuadTree Q, Zone zone){
+    free(Q);
+    Q = NULL;
+    printf("Tous les noeuds du QuadTree ont été libérées\n");
 }

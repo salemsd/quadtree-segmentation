@@ -24,6 +24,6 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
 
 void reset_quadtree(QuadTree Q, Zone zone, int indice);
 
-void update_quadtree(QuadTree Q, int indice, int indice_tab, ListeCell tab_plist, Zone *zone);
+void free_quadtree(QuadTree Q, Zone zone);
 
 #endif

@@ -30,10 +30,10 @@ void insere_plist(ListeCell *lst, Particule *p){
     *lst = insert;
 }
 
-void fill_tabs(Zone *zone, ListeCell tab_plist, int nbPoint){
+void fill_tabs(Zone *zone, ListeCell tab_plist, int nbPoint, int vitesse){
     for (int i = 0; i < nbPoint; i++){
         zone->tab_part[i] = getParticule(zone->W_H);
-        zone->tab_part[i].vitesse = 1;
+        zone->tab_part[i].vitesse = vitesse;
         zone->tab_part[i].dx = ((rand()%3) - 1) * zone->tab_part[i].vitesse;
         zone->tab_part[i].dy = ((rand()%3) - 1) * zone->tab_part[i].vitesse;
         printf("aaaaa %d %d\n", zone->tab_part[i].dx, zone->tab_part[i].dy);
@@ -44,8 +44,8 @@ void fill_tabs(Zone *zone, ListeCell tab_plist, int nbPoint){
     }
 }
 
-void reset_plist(ListeCell tab_plist, int nbPoint){
-    for (int i = 0; i < nbPoint; i++){
-        tab_plist[i].next = NULL;
-    }
+void free_plist(ListeCell tab_plist){
+    free(tab_plist);
+    tab_plist = NULL;
+    printf("Toutes les listes ont été libérées\n");
 }

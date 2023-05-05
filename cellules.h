@@ -21,8 +21,8 @@ ListeCell alloue_cellule(Particule *p) ;
 
 void insere_plist(ListeCell * lst,Particule *p) ;
 
-void fill_tabs(Zone *zone, ListeCell tab_plist,int nbPoint);
+void fill_tabs(Zone *zone, ListeCell tab_plist,int nbPoint, int vitesse);
 
-void reset_plist(ListeCell tab_plist, int nbPoint);
+void free_plist(ListeCell tab_plist);
 
 #endif

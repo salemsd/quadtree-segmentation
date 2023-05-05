@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-g -Wall -I. -lMLV -lm
-HEADERS = cellules.h particule.h quadtree.h graphique.h zone.h
-OBJ = segmentation.o cellules.o particule.o quadtree.o graphique.o zone.o
+HEADERS = cellules.h particule.h quadtree.h graphique.h zone.h menu.h
+OBJ = segmentation.o cellules.o particule.o quadtree.o graphique.o zone.o menu.o
 EXEC = segmentation
 
 default: $(EXEC)

@@ -16,6 +16,9 @@ typedef struct s_particule{
     int dy;
 } Particule;
 
+// Variable pour vérifier l'arrêt du programme
+extern int arret;
+
 Particule getParticuleOnClic();
 
 Particule getParticule(int taille_fenetre);

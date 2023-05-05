@@ -21,4 +21,6 @@ void dessineZones(QuadTree Q, Zone zone, int indice);
 
 void dessineParticules(Zone *zone);
 
+void exit_function(void *data);
+
 #endif
