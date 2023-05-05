@@ -1,20 +1,39 @@
-CC=gcc
-CFLAGS=-Wall -I. -lMLV
-HEADERS = cellules.h particule.h quadtree.h graphique.h zone.h
-OBJ = segmentation.o particule.o quadtree.o graphique.o zone.o
-EXEC = segmentation
+# Projet
+.PHONY: all dist docs clean
 
-default: $(EXEC)
+# flags
+CC = gcc
+CFLAGS += -g -Wall -Iinclude -lMLV -lm
 
-%.o: %.c $(HEADERS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+# executable
+BIN_DIR = bin
+TARGET = $(BIN_DIR)/segmentation
 
-$(EXEC): $(OBJ)
+# chemins
+vpath %.c src/
+vpath %.h include/
+
+# .o
+OBJ_DIR = obj/
+OBJ = $(OBJ_DIR)segmentation.o $(OBJ_DIR)cellules.o $(OBJ_DIR)particule.o $(OBJ_DIR)quadtree.o $(OBJ_DIR)graphique.o $(OBJ_DIR)zone.o $(OBJ_DIR)menu.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	mkdir -p $(BIN_DIR)
 	$(CC) -o $@ $^ $(CFLAGS)
+	@echo "\nUsage: make test"
+$(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
+	$(CC) -c -o $@ $< $(CFLAGS)
+$(OBJ_DIR):
+	mkdir -p $@	
+	
+dist:
+	mkdir -p $@
+	zip -r dist/SAOUDI_OUKACI_DM2.zip rapport.pdf Makefile src/ include/
 
-test: $(EXEC)
-	./$(EXEC)
+test: $(TARGET)
+	./$(TARGET)
 
 clean:
-	-rm -f *.o
-	-rm -f $(EXEC)
+	$(RM) -r dist/ $(OBJ_DIR) $(BIN_DIR)/
