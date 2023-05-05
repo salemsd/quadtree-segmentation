@@ -22,4 +22,6 @@ void free_tab_part(Zone *zone);
 
 void init_tab_particule_rand(Zone *zone);
 
+void get_zone_data(int mode, int *W_H, int *wmin, int *Kp, int *nbPoint, int *vitesse);
+
 #endif

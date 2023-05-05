@@ -26,3 +26,48 @@ void init_tab_particule_rand(Zone *zone){
         zone->tab_part[i] = getParticule(zone->W_H);
     }
 }
+
+void get_zone_data(int mode, int *W_H, int *wmin, int *Kp, int *nbPoint, int *vitesse){
+    int lu = 0;
+
+    do {
+        int c;
+        printf("Veuillez entrer la taille de la zone initiale(puissance de 4): ");
+        lu = scanf("%d", W_H);
+        while ( (c = getchar()) != '\n' && c != EOF && (*W_H) % 4 != 0);
+    }while (lu == 0);
+    
+    lu = 0;
+    do {
+        int c;
+        printf("Veuillez entrer wmin (puissance de 4): ");
+        lu = scanf("%d", wmin);
+        while ( (c = getchar()) != '\n' && c != EOF && (*wmin) % 4 != 0);
+    }while (lu == 0);
+
+    lu = 0;
+    do {
+        int c;
+        printf("Veuillez entrer Kp: ");
+        lu = scanf("%d", Kp);
+        while ( (c = getchar()) != '\n' && c != EOF);
+    }while (lu == 0);
+    
+    if (mode == 1){
+        lu = 0;
+        do {
+            int c;
+            printf("Veuillez entrer un nombre entier pour le nombre de points: ");
+            lu = scanf("%d", nbPoint);
+            while ( (c = getchar()) != '\n' && c != EOF);
+        }while (lu == 0);
+        
+        lu = 0;
+        do {
+            int c;
+            printf("Veuillez entrer un nombre entier pour la vitesse: ");
+            lu = scanf("%d", vitesse);
+            while ( (c = getchar()) != '\n' && c != EOF);
+        }while (lu == 0);
+    }
+}

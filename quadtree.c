@@ -71,26 +71,20 @@ void gestion_insert_qt(QuadTree Q, int indice, int indice_tab, ListeCell tab_pli
         int min_child = 1 ;
 
         Particule p = zone->tab_part[indice_tab];
-        double min_dist = MAX(abs(p.x - (Q[indice].x1 + xmid)/2), abs(p.y - (Q[indice].y1 + ymid)/2));
+        double tab_dist[] = {
+                                MAX(abs(p.x - (Q[indice].x1 + xmid)/2), abs(p.y - (Q[indice].y1 + ymid)/2)),
+                                MAX(abs(p.x - (Q[indice].x2 + xmid)/2), abs(p.y - (ymid + Q[indice].y1)/2)),
+                                MAX(abs(p.x - (xmid + Q[indice].x2)/2), abs(p.y - (ymid + Q[indice].y2)/2)),
+                                MAX(abs(p.x - (xmid + Q[indice].x1)/2), abs(p.y - (ymid + Q[indice].y2)/2))
+                            };
 
-        dist = MAX(abs(p.x - (Q[indice].x2 + xmid)/2), abs(p.y - (ymid + Q[indice].y1)/2));
-
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 2 ; 
-        }
-
-        dist = MAX(abs(p.x - (xmid + Q[indice].x2)/2), abs(p.y - (ymid + Q[indice].y2)/2));
-
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 3 ;
-        }
-
-        dist = MAX(abs(p.x - (xmid + Q[indice].x1)/2), abs(p.y - (ymid + Q[indice].y2)/2));
-        if(dist < min_dist){
-            min_dist = dist ;
-            min_child = 4 ;
+        double min_dist = tab_dist[0];
+        for (int i = 1; i < 4; i++){
+            dist = tab_dist[i];
+            if (dist < min_dist){
+                min_dist = dist;
+                min_child = i + 1;
+            }
         }
         
         switch (min_child) {

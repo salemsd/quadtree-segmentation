@@ -36,7 +36,6 @@ void fill_tabs(Zone *zone, ListeCell tab_plist, int nbPoint, int vitesse){
         zone->tab_part[i].vitesse = vitesse;
         zone->tab_part[i].dx = ((rand()%3) - 1) * zone->tab_part[i].vitesse;
         zone->tab_part[i].dy = ((rand()%3) - 1) * zone->tab_part[i].vitesse;
-        printf("aaaaa %d %d\n", zone->tab_part[i].dx, zone->tab_part[i].dy);
         
         tab_plist[i].part = &(zone->tab_part[i]);
         tab_plist[i].indice = i;

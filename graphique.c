@@ -54,11 +54,8 @@ void gestion_aleatoire(QuadTree Q, ListeCell tab_plist, Zone *zone, int nbPoint)
                 zone->tab_part[i].dy = -zone->tab_part[i].dy;
             }
 
-            printf("dx %d dy %d, avant x %g y %g\n", zone->tab_part[i].dx, zone->tab_part[i].dy, zone->tab_part[i].x, zone->tab_part[i].y);
             zone->tab_part[i].x += zone->tab_part[i].dx;
             zone->tab_part[i].y += zone->tab_part[i].dy;
-            printf("après x %g y %g\n", zone->tab_part[i].x, zone->tab_part[i].y);
-
         }
 
         MLV_clear_window(MLV_COLOR_WHITE);
