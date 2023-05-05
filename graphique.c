@@ -17,7 +17,6 @@ MLV_Color couleur_transparente(MLV_Color couleur, int alpha){
 }
 
 void gestion_clic(QuadTree Q, ListeCell tab_plist, Zone *zone){
-    // CHANGER PLUS TARD POUR GERER LA FERMETURE DE LA FENETRE
     while(!arret){
         zone->tab_part[zone->Np] = getParticuleOnClic();
         tab_plist[zone->Np].part = &(zone->tab_part[zone->Np]);

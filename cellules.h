@@ -15,14 +15,30 @@ typedef struct s_plist{
     
 } NoeudCell, *ListeCell;
 
+/**
+ * @brief Initialise une liste de cellules
+ * 
+ * @param zone La zone
+ * @param nbPoint Le nombre de points à allouer
+ * @return NoeudCell*: La liste
+ */
 NoeudCell *init_plist(Zone zone, int nbPoint);
 
-ListeCell alloue_cellule(Particule *p) ;
-
-void insere_plist(ListeCell * lst,Particule *p) ;
-
+/**
+ * @brief Remplis le tableau de particules et pointe chaque cellule de la liste vers les élements du tableau
+ * 
+ * @param zone La zone
+ * @param tab_plist Le tableau de cellules
+ * @param nbPoint Le nombre de points
+ * @param vitesse La vitesse des points
+ */
 void fill_tabs(Zone *zone, ListeCell tab_plist,int nbPoint, int vitesse);
 
+/**
+ * @brief Libère la liste de cellules
+ * 
+ * @param tab_plist La liste à libérer
+ */
 void free_plist(ListeCell tab_plist);
 
 #endif

@@ -8,28 +8,6 @@ NoeudCell *init_plist(Zone zone, int nbPoint){
     return new_plist;
 }
 
-ListeCell alloue_cellule(Particule *p){
-    ListeCell tmp ;
-
-    tmp = (NoeudCell *) malloc(sizeof(NoeudCell));
-
-    if(tmp){
-        tmp->part = p;
-        tmp->next = NULL;
-    }
-
-    return tmp;
-
-}
-
-void insere_plist(ListeCell *lst, Particule *p){
-    ListeCell insert = alloue_cellule(p);
-
-    insert->next = *lst;
-    insert->part = p;
-    *lst = insert;
-}
-
 void fill_tabs(Zone *zone, ListeCell tab_plist, int nbPoint, int vitesse){
     for (int i = 0; i < nbPoint; i++){
         zone->tab_part[i] = getParticule(zone->W_H);
