@@ -4,6 +4,10 @@
 #include "particule.h"
 
 #define NMAX 1000000000
+
+/// @file zone.h
+/// @brief Définitions de toutes les fonctions en rapport avec la zone de travail
+
 /**
  * @brief Structure de la zone de travail, avec ses paramètres
  * 

@@ -7,6 +7,9 @@
 #include "quadtree.h"
 #include "zone.h"
 
+/// @file graphique.h
+/// @brief Définitions de toutes les fonctions en rapport avec l'interface
+
 /**
  * @brief Initialise la fenêtre
  * 

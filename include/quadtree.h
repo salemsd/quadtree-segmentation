@@ -4,6 +4,9 @@
 #include "cellules.h"
 #include "zone.h"
 
+/// @file quadtree.h
+/// @brief Définitions de toutes les fonctions en rapport avec le quadtree
+
 /**
  * @brief Structure d'un arbre quartenaire
  * 

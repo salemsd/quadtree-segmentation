@@ -1,6 +1,9 @@
 #ifndef __PARTICULE_H
 #define __PARTICULE_H
 
+/// @file particule.h
+/// @brief Définitions de toutes les fonctions en rapport avec les particules
+
 /**
  * @brief Structure d'une particule (point)
  * 

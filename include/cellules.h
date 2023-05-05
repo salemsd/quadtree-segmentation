@@ -4,6 +4,9 @@
 #include "particule.h"
 #include "zone.h"
 
+/// @file cellules.h
+/// @brief Définitions de toutes les fonctions en rapport avec les cellules
+
 /**
  * @brief Structure d'une liste de cellules pointant vers des particules
  * 

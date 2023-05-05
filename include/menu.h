@@ -8,6 +8,9 @@
 // Fonctions fenêtre et dessin //
 /////////////////////////////////
 
+/// @file menu.h
+/// @brief Définitions de toutes les fonctions en rapport avec le menu principal
+
 /**
  * @brief Ouvre le menu principal du programme
  * 
